@@ -6,7 +6,7 @@ class Delay : public Effect
 {
 public:
   //functions
-  void process_samples(float *input, float *output, float *parameters);
+  void process_samples(float *input, float *output, int frames, int *parameters);
   void settings();
 
   float delayBuffer[DELAYBUFFERSIZE];

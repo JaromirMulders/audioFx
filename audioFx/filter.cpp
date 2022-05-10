@@ -19,16 +19,16 @@ void Filter::settings()
 
 }
 
-void Filter::process_samples(float *input, float *output, float *parameters)
+void Filter::process_samples(float *input, float *output, int frames, int *parameters)
 {
 
   frequency = parameters[0];
   resonance = parameters[1];
 
-  frequency = frequency / 120;
-  resonance = resonance / 100;
+  frequency = frequency / 127 - 0.1;
+  resonance = resonance / 127 - 0.1;
 
-  for(int bufptr=0; bufptr<FRAMESPERBUFFER; bufptr++) {
+  for(int bufptr=0; bufptr<frames; bufptr++) {
 
     if(frequency < 0.05){
       frequency = 0.05;

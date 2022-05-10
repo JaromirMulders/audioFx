@@ -5,7 +5,7 @@
 class Filter : public Effect
 {
 public:
-  void process_samples(float *input, float *output, float *parameters);
+  void process_samples(float *input, float *output, int frames, int *parameters);
   void settings();
 
   float frequency;

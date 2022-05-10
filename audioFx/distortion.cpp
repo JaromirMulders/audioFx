@@ -4,23 +4,23 @@
 void Distortion::settings()
 {
   //initial parameters
-  timbre = 0.5;
-  depth = 0.5;
+  timbre = 1;
+  depth = 1;
 
 }
 
 
 //processing samples
-void Distortion::process_samples(float *input, float *output, float *parameters)
+void Distortion::process_samples(float *input, float *output, int frames, int *parameters)
 {
   timbre = parameters[0];
   depth = parameters[1];
 
-  timbre = timbre * 0.05 + 0.5;
-  depth = depth * 0.01 + 0.1;
+  timbre = (timbre / POTRESOLUTION) * 2.5 + 0.5;
+  depth = (depth / POTRESOLUTION) * 2.5 + 0.5;
 
   timbreInverse = (1 - (timbre * 0.099)) * 10; //inverse scaling from timbre
-  for(int bufptr=0; bufptr<buffersize; bufptr++) {
+  for(int bufptr=0; bufptr<frames; bufptr++) {
 
     input[bufptr] = input[bufptr] * depth;                               //volume scaling
     input[bufptr] = tanh((input[bufptr] * (timbre + 1)));                //smooth clipping

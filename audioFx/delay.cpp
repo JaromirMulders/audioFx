@@ -12,16 +12,16 @@ void Delay::settings()
 
 }
 
-void Delay::process_samples(float *input, float *output, float *parameters)
+void Delay::process_samples(float *input, float *output, int frames, int *parameters)
 {
+
   delayTime = parameters[0];
-  feedback  = parameters[1];
+  feedback = parameters[1];
 
-  delayTime = delayTime * (SAMPLERATE / 100);
-  feedback = feedback * 0.01;
+  delayTime = delayTime * POTRESOLUTION + 100;
+  feedback = feedback / POTRESOLUTION;
 
-  for(int bufptr=0; bufptr<FRAMESPERBUFFER; bufptr++) {
-
+  for(int bufptr=0; bufptr<frames; bufptr++) {
     if(tapin >= DELAYBUFFERSIZE){
       tapin = 0;
 
@@ -38,7 +38,6 @@ void Delay::process_samples(float *input, float *output, float *parameters)
     output[bufptr] = delayBuffer[tapin];
 
     tapin++;
-
-  }//for
+  }
 
 }//delay
